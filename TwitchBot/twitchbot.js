@@ -167,7 +167,7 @@ setTimeout(function(){
 					if (songIsInCoolDown[songIndex] === true) {
 						sendMessage(client, channel, 'The song "'+songs[songIndex]+'" is on a cooldown... FeelsBadMan @' + username);
 					} else if (userIsInCoolDown[username.toLowerCase()] === true) {
-						sendMessage(client, channel, 'You can only request a song every ' + userCooldown + ' seconds... FeelsBadMan @' + username);
+						sendMessage(client, channel, 'You can only request a song every ' + UserCooldown + ' seconds... FeelsBadMan @' + username);
 					} else {
 						if (username.toLowerCase != channel) {
 							songIsInCoolDown[songIndex] = true;
