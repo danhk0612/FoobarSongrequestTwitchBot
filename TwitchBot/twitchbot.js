@@ -175,9 +175,12 @@ setTimeout(function(){
 							setTimeout(resetSongCoolDown,SongCooldown*1000,songIndex);
 							setTimeout(resetUserCoolDown,UserCooldown*1000,username);
 						}
-						http.get("http://127.0.0.1:8888/default/?cmd=QueueItems&param1="+(songIndex),function(res){
+						request({
+							url: "http://127.0.0.1:8888/default/?cmd=QueueItems&param1="+songIndex,
+							json: true
+						}, function (res) {
 							sendMessage(client, channel, 'I found something for you: "'+songs[songIndex]+'" FeelsGoodMan @' + username);
-						});
+						})
 					}
 				} else {
 					sendMessage(client, channel, "I didn't find anything... FeelsBadMan @" + username);
