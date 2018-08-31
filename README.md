@@ -9,9 +9,9 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
 
 * [node.js](https://nodejs.org/ "Download node.js")
   
-* [foo_httpcontrol](https://www.dropbox.com/s/uglqfqwbtzl7xio/foobarCon_0.97.28-fc.exe?dl=1 "Download foo_httpcontrol")
+* [foo_httpcontrol](https://bitbucket.org/oblikoamorale/foo_httpcontrol/downloads/ "Download foo_httpcontrol")
   
-* [The two folders in this repository](https://github.com/MichielP1807/FoobarSongrequestTwitchBot/archive/master.zip "Download this repository")
+* [The two folders in this repository](https://github.com/danhk0612/FoobarSongrequestTwitchBot/archive/master.zip "Download this repository")
 
 ## Commands:
 
@@ -55,13 +55,11 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
  
 5.  Copy the foo_httpcontrol_data from this repository
   
-6.	Open up appdata (press the windows key and R, type in %appdata% and press ok)
-  
-7.	Navigate to *C:\Users\UserNameHere\AppData\Roaming\foobar2000\*
+6.	Navigate to *foo_httpcontrol home folder*
 
-8.  Paste the foo_httpcontrol_data folder here
+7.  Paste the foo_httpcontrol_data folder here
   
-9.	Go to http://127.0.0.1:8888/playlistviewer/ in your browser, see the name of the currently playing song there
+8.	Go to http://127.0.0.1:8888/playlistviewer/ in your browser, see the name of the currently playing song there
   
 ####  3. Setting up node.js
   
@@ -116,4 +114,4 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
   
 2.	If it’s not adding any song at all please first try to restart the bot, if it still doesn’t work ask for help
 
-If you have any other problems please make an issue at [here](https://github.com/MichielP1807/FoobarSongrequestTwitchBot/issues/new "New GitHub Issue") or tweet me @MichielP1807!
+If you have any other problems please make an issue at [here](https://github.com/danhk0612/FoobarSongrequestTwitchBot/issues/new "New GitHub Issue")
