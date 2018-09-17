@@ -1,11 +1,14 @@
-// Foobar Songrequests Twitch Bot by MichielP1807
-
 var TwitchbotUsername = "YOUR_BOT_NAME_HERE";
 var TwitchbotPassword = "oauth:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 var TwitchbotJoinChannel = "CHANNEL_NAME_TO_GO_TO";
 var SongCooldown = 600;
 var UserCooldown = 30;
 var Managername = "YOUR_NAME";
+
+var PingTxt = "!핑";
+var CurrentSongTxt = "!지금노래";
+var PrevSongTxt = "!이전곡";
+var RequestTxt = "!노래신청";
 
 var songIsInCoolDown = [];
 var userIsInCoolDown = {};
@@ -33,6 +36,10 @@ fs.readFile('twitchbot-data.json', 'utf8', function readFileCallback(err, data) 
 		SongCooldown = obj.songCooldown;
 		UserCooldown = obj.userCooldown;
 		Managername = obj.managername;
+		PingTxt = obj.txtPing;
+		CurrentSongTxt = obj.txtCurrentSong;
+		PrevSongTxt = obj.txtPrevSong;
+		RequestTxt = obj.txtRequest;
 	}
 });
 
@@ -100,10 +107,10 @@ setTimeout(function () {
 		fs.appendFile('chatlog_' + year + '' + month + '' + day +'.txt', "\r\n [" + username + "] " + message , function (err) {});
 
 		// COMMAND: !핑
-		if (message.indexOf("!핑") == 0 && username == Managername) {
+		if (message.indexOf(PingTxt) == 0 && username == Managername) {
 			sendMessage(client, channel, "퐁!");
 			// COMMAND: !제목
-		} else if (message.indexOf("!제목") == 0 || message.indexOf("!지금노래") == 0 || (message.indexOf("!음악") == 0 && message.indexOf("!노래신청") == -1)) {
+		} else if (message.indexOf(CurrentSongTxt) == 0) {
 			request({
 				url: "http://127.0.0.1:8888/playlistviewer/?param3=nowPlaying.json",
 				json: true
@@ -121,7 +128,7 @@ setTimeout(function () {
 				}
 			})
 			// COMMAND: !previoussong
-		} else if (message.indexOf("!이전곡") == 0 || message.indexOf("!이전노래") == 0) {
+		} else if (message.indexOf(PrevSongTxt) == 0) {
 			if (songPrevious[0].length > 1 && songPrevious[1].length > 1) {
 				if (songPrevious[0] == "?") {
 					sendMessage(client, channel, '이전 곡: "' + songPrevious[1] + '"! @' + username);
@@ -132,7 +139,7 @@ setTimeout(function () {
 				sendMessage(client, channel, "이전 곡을 알 수 없습니다. @" + username);
 			}
 			// COMMAND: !노래신청
-		} else if (message.indexOf("!노래신청") == 0) {
+		} else if (message.indexOf(RequestTxt) == 0) {
 			var songWord = message.split(" ");
 			songWord.shift(); // remove the command name
 			for (i = 0; i < songWord.length; i++) {
@@ -140,7 +147,7 @@ setTimeout(function () {
 			}
 			var songPossible = [];
 			var songIndex = -1;
-			if (songWord.length == 0 || message.substring(6) == false || message.substring(6) == "***" || message.indexOf("!노래신청 ") != 0) {
+			if (songWord.length == 0 || message.substring(RequestTxt.length+1) == false || message.substring(RequestTxt.length+1) == "***" || message.indexOf("!노래신청 ") != 0) {
 				sendMessage(client, channel, '노래를 신청하려면 !노래신청 + 노래제목 을 채팅해 주세요! @' + username);
 			} else {
 				for (i = 0; i < songs.length; i++) {
@@ -194,7 +201,7 @@ setTimeout(function () {
 				} else {
 					sendMessage(client, channel, "노래를 찾을 수 없습니다. 노래 추가 요청이 완료되었습니다. @" + username);
 					sendMessage(client, channel, "노래 제목은 원어로 검색하셔야 합니다. 혹은 제목의 일부 단어만을 검색해 보세요. @" + username);
-					fs.appendFile('failedSongs.txt', "\r\n [" + username + "] " + message.substring(6), function (err) {});
+					fs.appendFile('failedSongs.txt', "\r\n [" + username + "] " + message.substring(RequestTxt.length+1), function (err) {});
 				}
 			}
 		}
