@@ -1,4 +1,4 @@
-# MichielP1807’s Foobar Songrequest Twitch Bot
+# Foobar Songrequest Twitch Bot
 A Twitch bot that lets people from Twitch chat request songs from your Foobar2000 playlist.
 
 For the YouTube version of this bot go [here](https://github.com/MichielP1807/FoobarSongrequestYouTubeBot).
@@ -15,15 +15,13 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
 
 ## Commands:
 
-* !songrequest [search query] - request songs from the Foobar2000 playlist
+* !노래신청 [노래제목] - request songs from the Foobar2000 playlist
 
-* !currentsong - bot will post the artist and title of the currently playing song in chat (works via whispers as well)
+* !제목 - bot will post the artist and title of the currently playing song in chat (works via whispers as well)
 
-* !previoussong - bot will post the artist and title of the previous song in chat (works via whispers as well)
+* !이전곡 - bot will post the artist and title of the previous song in chat (works via whispers as well)
 
-* !queuelength - bot will post the length of the playback queue in chat (works via whispers as well)
-
-* !ping - bot responds with pong! to verify it is working
+* !핑 - bot responds with pong! to verify it is working
 
 ## Features:
 
