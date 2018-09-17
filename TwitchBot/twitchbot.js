@@ -5,12 +5,15 @@ var TwitchbotPassword = "oauth:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 var TwitchbotJoinChannel = "CHANNEL_NAME_TO_GO_TO";
 var SongCooldown = 600;
 var UserCooldown = 30;
+var Managername = "YOUR_NAME";
 
 var songIsInCoolDown = [];
 var userIsInCoolDown = {};
 
 var messageCounter = 0;
 var maxMessagesPerSecond = 10;
+
+var regExp = /[［.,\/#!！?？$%\^&\*;:{}｛｝=\-_`~～()（）\'\"］]/g;
 
 console.log(" > Running Server");
 console.log(' ');
@@ -29,6 +32,7 @@ fs.readFile('twitchbot-data.json', 'utf8', function readFileCallback(err, data) 
 		TwitchbotJoinChannel = obj.joinChannel;
 		SongCooldown = obj.songCooldown;
 		UserCooldown = obj.userCooldown;
+		Managername = obj.managername;
 	}
 });
 
@@ -93,12 +97,10 @@ setTimeout(function () {
 		if(day.length == 1){ 
 		day = "0" + day; 
 		} 
-
-		console.log(year + "" + month + "" + day);
 		fs.appendFile('chatlog_' + year + '' + month + '' + day +'.txt', "\r\n [" + username + "] " + message , function (err) {});
 
 		// COMMAND: !핑
-		if (message.indexOf("!핑") == 0) {
+		if (message.indexOf("!핑") == 0 && username == Managername) {
 			sendMessage(client, channel, "퐁!");
 			// COMMAND: !제목
 		} else if (message.indexOf("!제목") == 0 || message.indexOf("!지금노래") == 0 || (message.indexOf("!음악") == 0 && message.indexOf("!노래신청") == -1)) {
@@ -131,10 +133,10 @@ setTimeout(function () {
 			}
 			// COMMAND: !노래신청
 		} else if (message.indexOf("!노래신청") == 0) {
-			var songWord = message.split(" ");;
+			var songWord = message.split(" ");
 			songWord.shift(); // remove the command name
 			for (i = 0; i < songWord.length; i++) {
-				songWord[i] = songWord[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"]/g, "").toLowerCase(); // remove interpunction
+				songWord[i] = songWord[i].replace(regExp, "").toLowerCase(); // remove interpunction
 			}
 			var songPossible = [];
 			var songIndex = -1;
@@ -144,7 +146,7 @@ setTimeout(function () {
 				for (i = 0; i < songs.length; i++) {
 					var active = true;
 					for (j = 0; j < songWord.length; j++) {
-						if (songs[i].toLowerCase().indexOf(songWord[j]) == -1 && songWord[j] != "***") {
+						if (songs[i].replace(regExp, "").toLowerCase().indexOf(songWord[j]) == -1 && songWord[j] != "***") {
 							active = false;
 						}
 					}
@@ -170,9 +172,9 @@ setTimeout(function () {
 					songIndex = songPossible[0];
 				}
 				if (songPossible.length > 0) {
-					if (songIsInCoolDown[songIndex] === true) {
+					if (songIsInCoolDown[songIndex] === true && username != Managername) {
 						sendMessage(client, channel, '"' + songs[songIndex] + '"는 현재 예약 불가입니다... @' + username);
-					} else if (userIsInCoolDown[username.toLowerCase()] === true) {
+					} else if (userIsInCoolDown[username.toLowerCase()] === true && username != Managername) {
 						sendMessage(client, channel, '노래 신청은 ' + UserCooldown / 60 + '분 마다 가능합니다... @' + username);
 					} else {
 						if (username.toLowerCase != channel) {
@@ -191,44 +193,13 @@ setTimeout(function () {
 					}
 				} else {
 					sendMessage(client, channel, "노래를 찾을 수 없습니다. 노래 추가 요청이 완료되었습니다. @" + username);
+					sendMessage(client, channel, "노래 제목은 원어로 검색하셔야 합니다. 혹은 제목의 일부 단어만을 검색해 보세요. @" + username);
 					fs.appendFile('failedSongs.txt', "\r\n [" + username + "] " + message.substring(6), function (err) {});
 				}
 			}
 		}
 	});
-	client.on("whisper", function (from, userstate, message, self) {
-		if (self) return;
-		// COMMAND: !제목
-		if (message.indexOf("!제목") == 0 || message.indexOf("!노래") == 0 || message.indexOf("!지금노래") == 0 || (message.indexOf("!음악") == 0 && message.indexOf("!노래신청") == -1)) {
-			request({
-				url: "http://127.0.0.1:8888/playlistviewer/?param3=nowPlaying.json",
-				json: true
-			}, function (error, response, body) {
-				if (!error && response.statusCode === 200) {
-					if (body.isPlaying == 1) {
-						if (songCurrent[0] == "?") {
-							sendWhisper(client, from, 'Current song: "' + songCurrent[1] + '"!');
-						} else {
-							sendWhisper(client, from, 'Current song: "' + songCurrent[1] + '" by ' + songCurrent[0] + '!');
-						}
-					} else {
-						sendWhisper(client, from, "No music playing... FeelsBadMan");
-					}
-				}
-			})
-			// COMMAND: !previoussong
-		} else if (message.indexOf("!previoussong") == 0 || message.indexOf("!previoustrack") == 0) {
-			if (songPrevious[0].length > 1 && songPrevious[1].length > 1) {
-				if (songPrevious[0] == "?") {
-					sendWhisper(client, from, 'Previous song: "' + songPrevious[1] + '"!');
-				} else {
-					sendWhisper(client, from, 'Previous song: "' + songPrevious[1] + '" by ' + songPrevious[0] + '!');
-				}
-			} else {
-				sendWhisper(client, from, "I can't remember the previous song... FeelsBadMan");
-			}
-		}
-	});
+
 }, 1000);
 
 function checkNowPlaying() {

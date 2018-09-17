@@ -4,5 +4,6 @@
 	"joinChannel":"CHANNEL_NAME_TO_GO_TO",
 	"songCooldown":"1800",
 	"userCooldown":"300",
-	"autoUpdate":"0"
+	"autoUpdate":"0",
+	"managername":"YOUR_NAME"
 }
