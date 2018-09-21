@@ -15,19 +15,27 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
 
 ## Commands:
 
-* !노래신청 [노래제목] - request songs from the Foobar2000 playlist
+* !노래신청 [노래제목] - 푸바2000의 음악 리스트중 노래 신청
 
-* !제목 - bot will post the artist and title of the currently playing song in chat (works via whispers as well)
+* !제목 - 현재 재생 노래 제목 출력
 
-* !이전곡 - bot will post the artist and title of the previous song in chat (works via whispers as well)
+* !이전곡 - 이전 재생 노래 제목 출력
 
-* !핑 - bot responds with pong! to verify it is working
+* !핑 - 봇 작동여부 확인
 
 ## Features:
 
-* Cooldowns for individual songs and for individual users
+* 각각 곡과 유저의 신청 쿨타임 기능
 
-* Automatically save requests that aren't in your playlist to a text file
+* 신청받은 곡이 없는 경우 파일로 리스트 자동 저장
+
+* 채팅 기록 저장
+
+* VIP 기능 (쿨타임 적음)
+
+* 관리자는 쿨타임 적용 안됨
+
+* 플레이리스트 외부 접속 주소 제공 (http://localhost:8080/)
 
 ## How to setup: 
 
