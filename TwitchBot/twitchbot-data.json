@@ -5,7 +5,7 @@
 	"songCooldown":"1800",
 	"userCooldown":"600",
 	"autoUpdate":"1",
-	"managername":"YOUR_NAME",
+	"managerId":"YOUR_NAME",
 	"txtPing":"!핑",
 	"txtCurrentSong":"!제목",
 	"txtPrevSong":"!이전곡",
