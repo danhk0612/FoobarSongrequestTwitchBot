@@ -16,7 +16,8 @@ var userIsInCoolDown = {};
 var messageCounter = 0;
 var maxMessagesPerSecond = 10;
 
-var regExp = /[［.,\/#!！?？$%\^&\*;:{}｛｝=\-_`~～()（）\'\"］]/g;
+// var regExp = /[［.,\/#!！?？$%\^&\*;:{}｛｝=\-_`~～()（）\'\"］]/g;
+var regExp = /[［,\/#!！?？$%\^&\*;:{}｛｝=\-_`~～()（）\'\"］]/g;
 
 var vipList = [
 	"vipID1", "vipID2"
@@ -225,6 +226,8 @@ function mainFunc() {
 								json: true
 							}, function (error, response, body) {
 								sendMessage(client, channel, '노래 예약 완료: "' + songs[songIndex] + '" @' + username);
+								requestList.push(songs[songIndex]);
+								fs.writeFile('requestNextSong.txt', requestList[0], function (err) { });
 							})
 
 						}
@@ -255,6 +258,18 @@ function checkNowPlaying() {
 				console.log(" ");
 				console.log(" > Now song: " + songCurrent[0] + " - " + songCurrent[1]);
 				console.log(" ");
+
+				fs.writeFile('requestNextSong.txt', "", function (err) { });
+				var nextRequest = "No Requested Song..";
+
+				if(requestList.length > 0 && songCurrent[1]==requestList[0]){
+					requestList.shift();					
+					if(requestList[0]){
+						nextRequest = requestList[0];
+					}														
+				}				
+				fs.writeFile('requestNextSong.txt', nextRequest, function (err) { });
+
 				songPrevious = songCurrentP;
 			}
 		}
