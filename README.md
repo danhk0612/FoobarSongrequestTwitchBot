@@ -23,6 +23,8 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
 
 * !핑 - 봇 작동여부 확인
 
+* !등급확인 - 본인의 VIP 여부 출력
+
 ## Features:
 
 * 각각 곡과 유저의 신청 쿨타임 기능
@@ -31,11 +33,13 @@ For the YouTube version of this bot go [here](https://github.com/MichielP1807/Fo
 
 * 채팅 기록 저장
 
-* VIP 기능 (쿨타임 적음)
+* VIP 기능 (쿨타임 따로 관리 가능)
 
 * 관리자는 쿨타임 적용 안됨
 
-* 플레이리스트 외부 접속 주소 제공 (http://localhost:8080/)
+* 플레이리스트 외부 접속 주소 HTML 페이지 제공 (http://localhost:8080/)
+
+* 다음 예약곡 텍스트 파일 출력 기능
 
 ## How to setup: 
 
